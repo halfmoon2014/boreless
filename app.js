@@ -4,8 +4,6 @@ var path = require('path');
 var favicon = require('serve-favicon');
 app.use(favicon(path.join(__dirname, 'client', 'favicon.ico')));
 app.use('/client',express.static(path.join(__dirname, 'client/page')));
-
-
 app.use('/b',express.static(path.join(__dirname, 'client/bootstrap')));
 
 app.get('/', function (req, res) {
