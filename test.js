@@ -9,24 +9,27 @@ router.get('/', function(req, res, next) {
     const request = require('request')
     const crypto = require('crypto')
 
-    const apiKey = 'N1iWv9cqnB0kM5gJKmBYu2NtmCC1HSLkmm8JByRSD4P'
-    const apiSecret = '2CGCU3DvYvXxlUz4slvJfvPOQpDO0GtBkDw3aNzug7w'
+    const apiKey = 'N1iWv9cqnB0kM5gJKmBYu2NtmCC1HSLkmm8JByRSD4E'
+    const apiSecret = '2CGCU3DvYvXxlUz4slvJfvPOQpDO0GtBkDw3aNzug7s'
     const baseUrl = 'https://api.bitfinex.com'
 
     const url = '/v1/account_infos'
-    const nonce = Date.now().toString()
+    //const nonce="1511318188781";
+    const nonce=Date.now().toString();
     const completeURL = baseUrl + url
     const body = {
         request: url,
         nonce
     }
+    console.log(body);
     const payload = new Buffer(JSON.stringify(body))
         .toString('base64')
-
+    console.log("payload:"+payload);
     const signature = crypto
         .createHmac('sha384', apiSecret)
         .update(payload)
         .digest('hex')
+    console.log("signature:"+signature);
 
     const options = {
         url: completeURL,
@@ -37,6 +40,7 @@ router.get('/', function(req, res, next) {
         },
         body: JSON.stringify(body)
     }
+    console.log("body:"+options.body);
 
     request.post(
         options,
